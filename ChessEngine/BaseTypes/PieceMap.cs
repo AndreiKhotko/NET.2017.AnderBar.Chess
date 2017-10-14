@@ -5,6 +5,9 @@ using ChessEngine.Pieces;
 
 namespace ChessEngine.BaseTypes
 {
+    /// <summary>
+    /// A storage for pieces, implements IPieceStorage interface 
+    /// </summary>
     public class PieceMap : IPieceStorage
     {
         /// <summary>
