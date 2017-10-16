@@ -18,5 +18,23 @@ namespace ChessEngine.Pieces
             Coordinate = coordinate;
             Color = color;
         }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Piece);
+        }
+
+        public bool Equals(Piece piece)
+        {
+            return piece != null && piece.Color == this.Color && piece.Coordinate == this.Coordinate;
+        }
+
+        public override int GetHashCode()
+        {
+            if (Coordinate != null)
+                return Coordinate.GetHashCode() ^ Color.GetHashCode();
+
+            return Color.GetHashCode();
+        }
     }
 }
