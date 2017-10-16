@@ -5,7 +5,7 @@ namespace ChessEngine.BaseTypes
     /// <summary>
     /// Class represents a chess point
     /// </summary>
-    public class ChessPoint
+    public class ChessPoint : IEquatable<ChessPoint>
     {
         public int Number
         {
@@ -49,6 +49,37 @@ namespace ChessEngine.BaseTypes
         {
             Number = number;
             Letter = letter;
+        }
+        
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as ChessPoint);
+        }
+
+        public bool Equals(ChessPoint point)
+        {
+            return point != null && point.Letter == this.Letter && point.Number == this.Number;
+        }
+
+        public static bool operator !=(ChessPoint point1, ChessPoint point2)
+        {
+            if (!ReferenceEquals(point1, null))
+                return !(point1.Equals(point2));
+
+            return !ReferenceEquals(point2, null);
+        }
+
+        public static bool operator ==(ChessPoint point1, ChessPoint point2)
+        {
+            if (!ReferenceEquals(point1, null))
+                return point1.Equals(point2);
+
+            return ReferenceEquals(point2, null);
+        }
+
+        public override int GetHashCode()
+        {
+            return Letter.GetHashCode() ^ Number.GetHashCode();
         }
 
         /// <summary>
