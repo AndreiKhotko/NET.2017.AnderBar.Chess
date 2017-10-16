@@ -43,7 +43,7 @@ namespace ChessEngine.UnitTests.BaseTypesTests
         [TestCase(8)]
         public void SetNumber_TakesValidNumber_ShouldSetNumber(int number)
         {
-            var chessPoint = new ChessPoint('a', 3) { Number = number};
+            var chessPoint = new ChessPoint('a', 3) {Number = number};
 
             Assert.AreEqual(number, chessPoint.Number);
         }
@@ -57,6 +57,115 @@ namespace ChessEngine.UnitTests.BaseTypesTests
             var chessPoint = new ChessPoint('a', 3);
 
             Assert.Throws<ArgumentException>(() => { chessPoint.Number = number; });
+        }
+
+        [TestCase('a', 1, 'a', 1)]
+        [TestCase('h', 3, 'h', 3)]
+        public void Equals_TakesEqualInstance_ReturnsTrue(char letter1, int number1, char letter2, int number2)
+        {
+            var chessPoint1 = new ChessPoint(letter1, number1);
+            var chessPoint2 = new ChessPoint(letter2, number2);
+
+            Assert.True(chessPoint1.Equals(chessPoint2));
+        }
+
+        [TestCase('a', 1, 'a', 2)]
+        [TestCase('h', 3, 'b', 3)]
+        public void Equals_TakesNonEqualInstance_ReturnsFalse(char letter1, int number1, char letter2, int number2)
+        {
+            var chessPoint1 = new ChessPoint(letter1, number1);
+            var chessPoint2 = new ChessPoint(letter2, number2);
+
+            Assert.False(chessPoint1.Equals(chessPoint2));
+        }
+
+        [TestCase('a', 1)]
+        public void Equals_TakesNull_ReturnsFalse(char letter, int number)
+        {
+            var chessPoint = new ChessPoint(letter, number);
+
+            Assert.False(chessPoint.Equals(null));
+        }
+
+        [TestCase('a', 1, 'a', 1)]
+        [TestCase('h', 3, 'h', 3)]
+        public void OverloadedEqualsOperator_TakesEqualInstances_ReturnsTrue(char letter1, int number1, char letter2,
+            int number2)
+        {
+            var chessPoint1 = new ChessPoint(letter1, number1);
+            var chessPoint2 = new ChessPoint(letter2, number2);
+
+            Assert.True(chessPoint1 == chessPoint2);
+        }
+
+        [TestCase('a', 1, 'a', 2)]
+        [TestCase('h', 3, 'b', 3)]
+        public void OverloadedEqualsOperator_TakesNonEqualInstances_ReturnsFalse(char letter1, int number1, char letter2,
+            int number2)
+        {
+            var chessPoint1 = new ChessPoint(letter1, number1);
+            var chessPoint2 = new ChessPoint(letter2, number2);
+
+            Assert.False(chessPoint1 == chessPoint2);
+        }
+
+        public void OverloadedEqualsOperator_TakesNulls_ReturnsTrue()
+        {
+            ChessPoint chessPoint1 = null;
+            ChessPoint chessPoint2 = null;
+
+            Assert.True(chessPoint1 == chessPoint2);
+        }
+
+        [TestCase('a', 1, 'a', 1)]
+        [TestCase('h', 3, 'h', 3)]
+        public void OverloadedNotEqualsOperator_TakesEqualInstances_ReturnsFalse(char letter1, int number1, char letter2,
+            int number2)
+        {
+            var chessPoint1 = new ChessPoint(letter1, number1);
+            var chessPoint2 = new ChessPoint(letter2, number2);
+
+            Assert.False(chessPoint1 != chessPoint2);
+        }
+
+        [TestCase('a', 1, 'a', 2)]
+        [TestCase('h', 3, 'b', 3)]
+        public void OverloadedNotEqualsOperator_TakesNonEqualInstances_ReturnsTrue(char letter1, int number1, char letter2,
+            int number2)
+        {
+            var chessPoint1 = new ChessPoint(letter1, number1);
+            var chessPoint2 = new ChessPoint(letter2, number2);
+
+            Assert.True(chessPoint1 != chessPoint2);
+        }
+
+        public void OverloadedNotEqualsOperator_TakesNulls_ReturnsFalse()
+        {
+            ChessPoint chessPoint1 = null;
+            ChessPoint chessPoint2 = null;
+
+            Assert.False(chessPoint1 == chessPoint2);
+        }
+
+        [TestCase('a', 1, 'a', 1)]
+        [TestCase('d', 4, 'd', 4)]
+        [TestCase('h', 8, 'h', 8)]
+        public void GetHashCode_TwoEqualsInstances_ReturnsTrue(char letter1, int number1, char letter2, int number2)
+        {
+            var chessPoint1 = new ChessPoint(letter1, number1);
+            var chessPoint2 = new ChessPoint(letter2, number2);
+
+            Assert.True(chessPoint1.GetHashCode() == chessPoint2.GetHashCode());
+        }
+
+        [TestCase('a', 1, 'a', 2)]
+        [TestCase('d', 4, 'c', 4)]
+        public void GetHashCode_TwoNonEqualsInstances_ReturnsFalse(char letter1, int number1, char letter2, int number2)
+        {
+            var chessPoint1 = new ChessPoint(letter1, number1);
+            var chessPoint2 = new ChessPoint(letter2, number2);
+
+            Assert.False(chessPoint1.GetHashCode() == chessPoint2.GetHashCode());
         }
     }
 }
